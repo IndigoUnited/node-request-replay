@@ -41,7 +41,7 @@ Note that the default retry options are modified to be more appropriate for requ
 * `factor`: The exponential factor to use. Default is `2`.
 * `minTimeout`: The amount of time before starting the first retry. Default is `2000`.
 * `maxTimeout`: The maximum amount of time between two retries. Default is `35000`.
-* `randomize`: Randomizes the timeouts by multiplying with a factor between `1` to `2`. Default is `false`.
+* `randomize`: Randomizes the timeouts by multiplying with a factor between `1` to `2`. Default is `true`.
 
 
 ## License

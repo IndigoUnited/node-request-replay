@@ -19,7 +19,8 @@ function requestReplay(request, options) {
         retries: 5,
         factor: 3,
         minTimeout: 2000,
-        maxTimeout: 35000
+        maxTimeout: 35000,
+        randomize: true
     }, options || {});
 
     options.errorCodes = options.errorCodes || errorCodes;
