@@ -33,8 +33,10 @@ describe('request-replay', function () {
             expect(error.replays).to.equal(5);
             next();
         }), { errorCodes: ['ENOTFOUND'], factor: 1, minTimeout: 10, maxTimeout: 10 })
-        .on('replay', function (nr) {
+        .on('replay', function (nr, error) {
             expect(nr).to.equal(tries);
+            expect(error).to.be.an(Error);
+            expect(error.code).to.equal('ENOTFOUND');
             tries++;
         });
     });

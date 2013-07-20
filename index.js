@@ -46,7 +46,7 @@ function requestReplay(request, options) {
 
         // Retry
         if (operation.retry(error)) {
-            this.emit('replay', attempts - 1);
+            this.emit('replay', attempts - 1, error);
             return 0;
         }
 
