@@ -23,6 +23,9 @@ replay(request('http://google.com/doodle.png'), {}})
     // Do something with err
 })
 .pipe(fs.createWriteStream('doodle.png'))
+.on('replay', function (replay) {
+    console.log('replay nr:', replay);
+})
 .on('error', function (err) {
     // Do something with err
 })
