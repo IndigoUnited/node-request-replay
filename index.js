@@ -14,6 +14,7 @@ function requestReplay(request, options) {
     var operation;
     var attempts = 0;
 
+    // Default options
     options = deepExtend({
         errorCodes: errorCodes,
         retries: 5,
@@ -23,8 +24,7 @@ function requestReplay(request, options) {
         randomize: true
     }, options || {});
 
-    options.errorCodes = options.errorCodes || errorCodes;
-
+    // Init retry
     operation = retry.operation(options);
     operation.attempt(function () {
         if (attempts) {
@@ -34,6 +34,10 @@ function requestReplay(request, options) {
         attempts++;
     });
 
+    // Increase maxListeners because start() adds a new listener each time
+    request._maxListeners += options.retries + 1;
+
+    // Monkey patch emit to catch errors and retry
     request.emit = function (name, error) {
         // If not an error, pass-through
         if (name !== 'error') {
