@@ -1,6 +1,6 @@
 {
   "name": "request-replay",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Replays a request when a network error occurs",
   "main": "index.js",
   "dependencies": {
