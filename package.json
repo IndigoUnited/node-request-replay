@@ -4,8 +4,7 @@
   "description": "Replays a request when a network error occurs",
   "main": "index.js",
   "dependencies": {
-    "retry": "~0.6.0",
-    "deep-extend": "~0.2.5"
+    "retry": "~0.6.0"
   },
   "devDependencies": {
     "mocha": "~1.12.0",

@@ -1,7 +1,6 @@
 'use strict';
 
 var retry = require('retry');
-var deepExtend = require('deep-extend');
 
 var errorCodes = [
     'EADDRINFO',
@@ -10,16 +9,26 @@ var errorCodes = [
     'ESOCKETTIMEDOUT'
 ];
 
+function mixIn(dst, src) {
+    var key;
+
+    for (key in src) {
+        dst[key] = src[key];
+    }
+
+    return dst;
+}
+
 function requestReplay(request, options) {
     var originalEmit = request.emit;
     var operation;
     var attempts = 0;
 
     // Default options
-    options = deepExtend({
+    options = mixIn({
         errorCodes: errorCodes,
         retries: 5,
-        factor: 3,
+        factor: 2,
         minTimeout: 2000,
         maxTimeout: 35000,
         randomize: true
@@ -29,6 +38,7 @@ function requestReplay(request, options) {
     operation = retry.operation(options);
     operation.attempt(function () {
         if (attempts) {
+            request.init();
             request.start();
         }
 
