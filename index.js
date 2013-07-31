@@ -6,7 +6,8 @@ var deepExtend = require('deep-extend');
 var errorCodes = [
     'EADDRINFO',
     'ETIMEDOUT',
-    'ECONNRESET'
+    'ECONNRESET',
+    'ESOCKETTIMEDOUT'
 ];
 
 function requestReplay(request, options) {
