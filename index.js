@@ -65,7 +65,7 @@ function requestReplay(request, options) {
 
         // If not a retry error code, pass-through
         if (name !== 'error' || options.errorCodes.indexOf(error.code) === -1) {
-            return originalEmit.call(this, name, error);
+            return originalEmit.apply(this, arguments);
         }
 
         // Retry
@@ -79,7 +79,7 @@ function requestReplay(request, options) {
 
         // No more retries available, error out
         error.replays = attempts - 1;
-        return originalEmit.call(this, name, error);
+        return originalEmit.apply(this, arguments);
     };
 
     return request;

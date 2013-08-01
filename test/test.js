@@ -23,16 +23,18 @@ describe('request-replay', function () {
     it('should succeed if first fails but one of others succeed', function (next) {
         this.timeout(15000);
 
-        replay(request.get('http://127.0.0.1:8089', function (error) {
+        replay(request.get('http://127.0.0.1:8089', { json: true }, function (error, response, body) {
             expect(error).to.be(null);
+            expect(response).to.be.ok();
+            expect(body).to.eql({ 'foo': 'bar' });
             next();
         }), {
             errorCodes: ['ENOTFOUND', 'ECONNREFUSED']
         })
         .on('replay', function () {
             http.createServer(function (req, res) {
-                res.writeHead(200, { 'Content-Type': 'text/plain' });
-                res.end('Hello World\n');
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end('{ "foo": "bar" }');
             })
             .listen(8089, '127.0.0.1');
         });
