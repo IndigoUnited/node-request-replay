@@ -22,6 +22,7 @@ function mixIn(dst, src) {
 function requestReplay(request, options) {
     var originalEmit = request.emit;
     var operation;
+    var retrying = false;
     var attempts = 0;
 
     // Default options
@@ -37,6 +38,8 @@ function requestReplay(request, options) {
     // Init retry
     operation = retry.operation(options);
     operation.attempt(function () {
+        retrying = false;
+
         if (attempts) {
             request.init();
             request.start();
@@ -50,18 +53,26 @@ function requestReplay(request, options) {
 
     // Monkey patch emit to catch errors and retry
     request.emit = function (name, error) {
-        // If not an error, pass-through
-        if (name !== 'error') {
+        // If name is replay, pass-through
+        if (name === 'replay') {
             return originalEmit.apply(this, arguments);
         }
 
+        // Do not emit anything if we are retrying
+        if (retrying) {
+            return;
+        }
+
         // If not a retry error code, pass-through
-        if (options.errorCodes.indexOf(error.code) === -1) {
+        if (name !== 'error' || options.errorCodes.indexOf(error.code) === -1) {
             return originalEmit.call(this, name, error);
         }
 
         // Retry
         if (operation.retry(error)) {
+            retrying = true;
+            request.abort();
+            request._aborted = false;
             this.emit('replay', attempts - 1, error);
             return 0;
         }
