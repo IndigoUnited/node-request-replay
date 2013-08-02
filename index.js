@@ -28,7 +28,7 @@ function requestReplay(request, options) {
     // Default options
     options = mixIn({
         errorCodes: errorCodes,
-        retries: 6,
+        retries: 5,
         factor: 2,
         minTimeout: 1000,
         maxTimeout: 35000,
