@@ -21,7 +21,7 @@ var replay = require('request-replay');
 
 // Note that the options argument is optional
 // Accepts the same options the retry module does and an additional
-// errorCodes array that default to ['EADDRINFO', 'ETIMEDOUT', 'ECONNRESET']
+// errorCodes array that default to ['EADDRINFO', 'ETIMEDOUT', 'ECONNRESET', 'ESOCKETTIMEDOUT']
 replay(request('http://google.com/doodle.png', function (err, response, body) {
     // Do things
 }), {
