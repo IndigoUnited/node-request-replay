@@ -30,9 +30,8 @@ function requestReplay(request, options) {
         errorCodes: errorCodes,
         retries: 5,
         factor: 2,
-        minTimeout: 2000,
-        maxTimeout: 35000,
-        randomize: true
+        minTimeout: 1000,
+        maxTimeout: 35000
     }, options || {});
 
     // Init retry
