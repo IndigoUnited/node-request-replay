@@ -2,6 +2,10 @@
 
 Replays a [request](https://github.com/mikeal/request) when a network error occurs using the [retry](https://github.com/felixge/node-retry) module.
 
+**DO NOT** use this module if you are piping `request` instances.
+If you are listening to `data` events to buffer, beware that you must reset everything when a `replay` occurs.
+This is why `pipping` is not supported.
+
 
 ## Installation
 
@@ -18,20 +22,15 @@ var replay = require('request-replay');
 // Note that the options argument is optional
 // Accepts the same options the retry module does and an additional
 // errorCodes array that default to ['EADDRINFO', 'ETIMEDOUT', 'ECONNRESET']
-replay(request('http://google.com/doodle.png'), {}})
-.on('error', function (err) {
-    // Do something with err
+replay(request('http://google.com/doodle.png', function (err, response, body) {
+    // Do things
+}), {
+    retries: 10,
+    factor: 3
 })
-.pipe(fs.createWriteStream('doodle.png'))
 .on('replay', function (replay, error) {
     console.log('request failed:', error.code, error.message);
     console.log('replay nr:', replay);
-})
-.on('error', function (err) {
-    // Do something with err
-})
-.on('close', function (err) {
-    // Saved to doogle.png!
 })
 ```
 
