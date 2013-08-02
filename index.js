@@ -28,10 +28,11 @@ function requestReplay(request, options) {
     // Default options
     options = mixIn({
         errorCodes: errorCodes,
-        retries: 5,
+        retries: 6,
         factor: 2,
         minTimeout: 1000,
-        maxTimeout: 35000
+        maxTimeout: 35000,
+        randomize: true
     }, options || {});
 
     // Init retry
