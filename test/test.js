@@ -53,12 +53,15 @@ describe('request-replay', function () {
             errorCodes: ['ENOTFOUND'],
             factor: 1,
             minTimeout: 10,
-            maxTimeout: 10
+            maxTimeout: 10,
+            randomize: false
         })
-        .on('replay', function (nr, error) {
-            expect(nr).to.equal(tries);
-            expect(error).to.be.an(Error);
-            expect(error.code).to.equal('ENOTFOUND');
+        .on('replay', function (replay) {
+            expect(replay).to.be.an('object');
+            expect(replay.number).to.equal(tries);
+            expect(replay.error).to.be.an(Error);
+            expect(replay.error.code).to.equal('ENOTFOUND');
+            expect(replay.delay).to.be(10);
             tries++;
         });
     });

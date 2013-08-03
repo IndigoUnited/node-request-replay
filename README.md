@@ -28,9 +28,11 @@ replay(request('http://google.com/doodle.png', function (err, response, body) {
     retries: 10,
     factor: 3
 })
-.on('replay', function (replay, error) {
-    console.log('request failed:', error.code, error.message);
-    console.log('replay nr:', replay);
+.on('replay', function (replay) {
+    // "replay" is an object that contains some useful information
+    console.log('request failed: ' + replay.error.code + ' ' + replay.error.message);
+    console.log('replay nr: #' + replay.number);
+    console.log('will retry in: ' + replay.delay + 'ms')
 })
 ```
 

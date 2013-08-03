@@ -22,6 +22,7 @@ function mixIn(dst, src) {
 function requestReplay(request, options) {
     var originalEmit = request.emit;
     var operation;
+    var timeout;
     var retrying = false;
     var attempts = 0;
 
@@ -68,12 +69,18 @@ function requestReplay(request, options) {
             return originalEmit.apply(this, arguments);
         }
 
+        timeout = operation._timeouts[0];
+
         // Retry
         if (operation.retry(error)) {
             retrying = true;
             request.abort();
             request._aborted = false;
-            this.emit('replay', attempts - 1, error);
+            this.emit('replay', {
+                number: attempts - 1,
+                error: error,
+                delay: timeout
+            });
             return 0;
         }
 
