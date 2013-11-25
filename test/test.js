@@ -9,7 +9,7 @@ describe('request-replay', function () {
     it('should replay on network error', function (next) {
         replay(request.get('http://somedomainthatwillneverexistforsure.com:8089', function (error) {
             expect(error).to.be.an(Error);
-            expect(error.code).to.equal('EADDRINFO');
+            expect(error.code).to.equal('ENOTFOUND');
             expect(error.replays).to.equal(5);
             next();
         }), {
@@ -45,7 +45,7 @@ describe('request-replay', function () {
 
         stream = replay(request.get('http://somedomainthatwillneverexistforsure.com:8089', function (error) {
             expect(error).to.be.an(Error);
-            expect(error.code).to.equal('EADDRINFO');
+            expect(error.code).to.equal('ENOTFOUND');
             expect(error.replays).to.equal(5);
             next();
         }), {
@@ -58,7 +58,7 @@ describe('request-replay', function () {
             expect(replay).to.be.an('object');
             expect(replay.number).to.equal(tries);
             expect(replay.error).to.be.an(Error);
-            expect(replay.error.code).to.equal('EADDRINFO');
+            expect(replay.error.code).to.equal('ENOTFOUND');
             expect(replay.delay).to.be(10);
             tries++;
         });
