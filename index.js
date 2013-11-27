@@ -6,7 +6,8 @@ var errorCodes = [
     'EADDRINFO',
     'ETIMEDOUT',
     'ECONNRESET',
-    'ESOCKETTIMEDOUT'
+    'ESOCKETTIMEDOUT',
+    'ENOTFOUND'
 ];
 
 function mixIn(dst, src) {
