@@ -20,6 +20,8 @@ describe('request-replay', function () {
     });
 
     it('should replay on http error', function (next) {
+        this.timeout(15000);
+
         var number = 0;
         replay(request.get('http://httpbin.org/status/500', function (error, response) {
             expect(response.statusCode).to.equal(500);
