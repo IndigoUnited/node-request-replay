@@ -1,4 +1,4 @@
-# request-replay [![Build Status](https://secure.travis-ci.org/IndigoUnited/node-request-replay.png)](http://travis-ci.org/IndigoUnited/node-request-replay.png)
+# request-replay [![Build Status](https://travis-ci.org/IndigoUnited/node-request-replay.svg?branch=master)](https://travis-ci.org/IndigoUnited/node-request-replay.svg?branch=master)
 
 Replays a [request](https://github.com/mikeal/request) when a network error occurs using the [retry](https://github.com/felixge/node-retry) module.
 
