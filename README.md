@@ -1,4 +1,16 @@
-# request-replay [![Build Status](https://travis-ci.org/IndigoUnited/node-request-replay.svg?branch=master)](https://travis-ci.org/IndigoUnited/node-request-replay.svg?branch=master)
+# request-replay
+
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency status][david-dm-image]][david-dm-url] [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url]
+
+[npm-url]:https://npmjs.org/package/request-replay
+[downloads-image]:http://img.shields.io/npm/dm/request-replay.svg
+[npm-image]:http://img.shields.io/npm/v/request-replay.svg
+[travis-url]:https://travis-ci.org/IndigoUnited/node-request-replay
+[travis-image]:http://img.shields.io/travis/IndigoUnited/node-request-replay.svg
+[david-dm-url]:https://david-dm.org/IndigoUnited/node-request-replay
+[david-dm-image]:https://img.shields.io/david/IndigoUnited/node-request-replay.svg
+[david-dm-dev-url]:https://david-dm.org/IndigoUnited/node-request-replay#info=devDependencies
+[david-dm-dev-image]:https://img.shields.io/david/dev/IndigoUnited/node-request-replay.svg
 
 Replays a [request](https://github.com/mikeal/request) when a network error occurs using the [retry](https://github.com/felixge/node-retry) module.
 
