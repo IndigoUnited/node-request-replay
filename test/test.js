@@ -13,24 +13,30 @@ describe('request-replay', function () {
             expect(error.replays).to.equal(5);
             next();
         }), {
-            factor: 1,
             minTimeout: 10,
             maxTimeout: 10
         });
     });
 
     it('should succeed if first fails but one of others succeed', function (next) {
+        var tries = 0;
+
         this.timeout(15000);
 
         replay(request.get('http://127.0.0.1:8089', { json: true }, function (error, response, body) {
             expect(error).to.be(null);
             expect(response).to.be.ok();
             expect(body).to.eql({ 'foo': 'bar' });
+            expect(tries).to.be(1);
             next();
         }), {
-            errorCodes: ['ECONNREFUSED']
+            errorCodes: ['ECONNREFUSED'],
+            minTimeout: 10,
+            maxTimeout: 10
         })
         .on('replay', function () {
+            tries++;
+
             http.createServer(function (req, res) {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end('{ "foo": "bar" }');
@@ -49,10 +55,8 @@ describe('request-replay', function () {
             expect(error.replays).to.equal(5);
             next();
         }), {
-            factor: 1,
             minTimeout: 10,
-            maxTimeout: 10,
-            randomize: false
+            maxTimeout: 10
         })
         .on('replay', function (replay) {
             expect(replay).to.be.an('object');

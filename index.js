@@ -32,7 +32,7 @@ function requestReplay(request, options) {
         errorCodes: errorCodes,
         retries: 5,
         factor: 2,
-        minTimeout: 1000,
+        minTimeout: 2000,
         maxTimeout: 35000,
         randomize: true
     }, options || {});
