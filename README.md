@@ -35,11 +35,16 @@ var replay = require('request-replay');
 // Accepts the same options the retry module does and an additional
 // errorCodes array with error codes that cause the replay to happen
 // Check out the code to see which is the default value for it
-replay(request('http://google.com/doodle.png', function (err, response, body) {
+replay(request('http://google.com/doodle.png', { timeout: 10000 }, function (err, response, body) {
     // Do things
 }), {
     retries: 10,
     factor: 3
+})
+.on('socket', function (socket) {
+    // In some operating systems the socket timeout is 0 so you must explicitly set it
+    // and close the socket once reached
+    socket.setTimeout(10000, socket.end.bind(socket));
 })
 .on('replay', function (replay) {
     // "replay" is an object that contains some useful information
@@ -56,18 +61,6 @@ Note that the default retry options are modified to be more appropriate for requ
 * `minTimeout`: The amount of time before starting the first retry. Default is `2000`.
 * `maxTimeout`: The maximum amount of time between two retries. Default is `35000`.
 * `randomize`: Randomizes the timeouts by multiplying with a factor between `1` to `2`. Default is `true`.
-
-
-**The request hangs when my connection is broken and no replay is issued**
-
-In some OS, the socket timeout is 0 and you must explicitly set it in `request`:
-
-```js
-request.on('socket', function (socket) {
-    socket.on('timeout', console.log.bind(console, 'timeout'));
-    socket.setTimeout(10000, socket.end.bind(socket));
-});
-```
 
 
 ## License
