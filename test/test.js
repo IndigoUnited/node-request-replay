@@ -6,6 +6,17 @@ var expect = require('expect.js');
 var replay = require('../');
 
 describe('request-replay', function () {
+    var server;
+
+    beforeEach(function (next) {
+        if (server) {
+            server.close(next);
+            server = null;
+        } else {
+            next();
+        }
+    });
+
     it('should replay on network error', function (next) {
         replay(request.get('http://somedomainthatwillneverexistforsure.com:8089', function (error) {
             expect(error).to.be.an(Error);
@@ -37,7 +48,7 @@ describe('request-replay', function () {
         .on('replay', function () {
             tries++;
 
-            http.createServer(function (req, res) {
+            server = http.createServer(function (req, res) {
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end('{ "foo": "bar" }');
             })
@@ -65,6 +76,42 @@ describe('request-replay', function () {
             expect(['ENOTFOUND', 'EADDRINFO']).to.contain(replay.error.code);
             expect(replay.delay).to.be(10);
             tries++;
+        });
+    });
+
+    it('should fire only one end event and no error events on success', function (next) {
+        var tries = 0;
+        var events = { error: 0, end: 0 };
+
+        this.timeout(15000);
+
+        replay(request.get('http://127.0.0.1:8089', { json: true }, function (error, response, body) {
+            expect(error).to.be(null);
+            expect(response).to.be.ok();
+            expect(body).to.eql({ 'foo': 'bar' });
+
+            expect(tries).to.be(1);
+            expect(events).to.eql({ error: 0, end: 1 });
+            next();
+        }), {
+            errorCodes: ['ECONNREFUSED'],
+            minTimeout: 10,
+            maxTimeout: 10
+        })
+        .on('error', function () {
+            events.error += 1;
+        })
+        .on('end', function () {
+            events.end += 1;
+        })
+        .on('replay', function () {
+            tries++;
+
+            server = http.createServer(function (req, res) {
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end('{ "foo": "bar" }');
+            })
+            .listen(8089, '127.0.0.1');
         });
     });
 });
