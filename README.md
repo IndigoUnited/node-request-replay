@@ -6,7 +6,7 @@
 [downloads-image]:http://img.shields.io/npm/dm/request-replay.svg
 [npm-image]:http://img.shields.io/npm/v/request-replay.svg
 [travis-url]:https://travis-ci.org/IndigoUnited/node-request-replay
-[travis-image]:http://img.shields.io/travis/IndigoUnited/node-request-replay.svg
+[travis-image]:http://img.shields.io/travis/IndigoUnited/node-request-replay/master.svg
 [david-dm-url]:https://david-dm.org/IndigoUnited/node-request-replay
 [david-dm-image]:https://img.shields.io/david/IndigoUnited/node-request-replay.svg
 [david-dm-dev-url]:https://david-dm.org/IndigoUnited/node-request-replay#info=devDependencies
