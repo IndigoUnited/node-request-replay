@@ -4,7 +4,7 @@
   "description": "Replays a request when a network error occurs",
   "main": "index.js",
   "dependencies": {
-    "retry": "^0.9.0"
+    "retry": "^0.10.0"
   },
   "devDependencies": {
     "expect.js": "^0.3.1",
