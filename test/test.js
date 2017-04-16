@@ -29,6 +29,24 @@ describe('request-replay', function () {
         });
     });
 
+    it('should replay on http error', function (next) {
+        this.timeout(15000);
+
+        var number = 0;
+        replay(request.get('http://httpbin.org/status/500', function (error, response) {
+            expect(response.statusCode).to.equal(500);
+            next();
+        }), {
+            factor: 1,
+            minTimeout: 10,
+            maxTimeout: 10
+        }).on('replay', function (replay) {
+            expect(replay.error.statusCode).to.equal(500);
+            expect(replay.number).to.equal(number);
+            number++;
+        });
+    });
+
     it('should succeed if first fails but one of others succeed', function (next) {
         var tries = 0;
 

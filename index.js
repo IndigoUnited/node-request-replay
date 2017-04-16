@@ -35,7 +35,9 @@ function requestReplay(request, options) {
         factor: 2,
         minTimeout: 2000,
         maxTimeout: 35000,
-        randomize: true
+        randomize: true,
+        networkError: true,
+        httpError: true
     }, options || {});
 
     // Init retry
@@ -66,8 +68,11 @@ function requestReplay(request, options) {
             return;
         }
 
-        // If not a retry error code, pass-through
-        if (name !== 'error' || options.errorCodes.indexOf(error.code) === -1) {
+        // If not a retry error, pass-through
+        var networkError = options.networkError && name === 'error' && options.errorCodes.indexOf(error.code) !== -1;
+        var httpError = options.httpError && name === 'complete' && error && error.statusCode >= 500 && error.statusCode < 600;
+
+        if (!networkError && !httpError) {
             return originalEmit.apply(this, arguments);
         }
 
