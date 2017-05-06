@@ -9,7 +9,7 @@
 [travis-image]:http://img.shields.io/travis/IndigoUnited/node-request-replay/master.svg
 [david-dm-url]:https://david-dm.org/IndigoUnited/node-request-replay
 [david-dm-image]:https://img.shields.io/david/IndigoUnited/node-request-replay.svg
-[david-dm-dev-url]:https://david-dm.org/IndigoUnited/node-request-replay#info=devDependencies
+[david-dm-dev-url]:https://david-dm.org/IndigoUnited/node-request-replay?type=dev
 [david-dm-dev-image]:https://img.shields.io/david/dev/IndigoUnited/node-request-replay.svg
 
 Replays a [request](https://github.com/mikeal/request) when a network error occurs using the [retry](https://github.com/felixge/node-retry) module.
