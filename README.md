@@ -1,7 +1,7 @@
 # request-replay
 
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency status][david-dm-image]][david-dm-url] [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url]
-
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency status][david-dm-image]][david-dm-url] [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url] [![Greenkeeper badge][greenkeeper-image]][greenkeeper-url]
+ 
 [npm-url]:https://npmjs.org/package/request-replay
 [downloads-image]:http://img.shields.io/npm/dm/request-replay.svg
 [npm-image]:http://img.shields.io/npm/v/request-replay.svg
@@ -11,6 +11,8 @@
 [david-dm-image]:https://img.shields.io/david/IndigoUnited/node-request-replay.svg
 [david-dm-dev-url]:https://david-dm.org/IndigoUnited/node-request-replay?type=dev
 [david-dm-dev-image]:https://img.shields.io/david/dev/IndigoUnited/node-request-replay.svg
+[greenkeeper-image]:https://badges.greenkeeper.io/IndigoUnited/node-request-replay.svg
+[greenkeeper-url]:https://greenkeeper.io/
 
 Replays a [request](https://github.com/mikeal/request) when a network error occurs using the [retry](https://github.com/felixge/node-retry) module.
 
